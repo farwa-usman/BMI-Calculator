@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -34,6 +35,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,13 +71,22 @@ fun tracker(){
                 onValueChange = {weight=it},
                     modifier = Modifier.fillMaxWidth().padding(5.dp),
                 label = {Text("Weight(Kg)")},
-                placeholder = {Text("Enter weight in kilogram")})
+                placeholder = {Text("Enter weight in kilogram")},
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,   // Number keyboard
+                        imeAction = ImeAction.Done            // Keyboard ka Done button
+                    )
+                )
                 OutlinedTextField(
                     value =height,
                     onValueChange = {height=it},
                     modifier = Modifier.fillMaxWidth().padding(5.dp),
                     label = {Text("Height(m)")},
-                    placeholder = {Text("Enter height in metre")})
+                    placeholder = {Text("Enter height in metre")},
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,   // Number keyboard
+                        imeAction = ImeAction.Done            // Keyboard ka Done button
+                    ))
            Row {    Button(onClick =  {
                  if (weight.isNotEmpty()&&height.isNotEmpty()){
                     var w=weight.trim().toFloatOrNull()
@@ -88,7 +100,7 @@ fun tracker(){
                         bmi!!>18.5&&bmi!!<24.9 -> {result="Normal weight"
                         statuscolour=Color.Green}
                         bmi!!>25&&bmi!!<29.9-> {result="Overweight"
-                        statuscolour=Color.Yellow}
+                        statuscolour= Color.Magenta}
                         bmi!!>=30-> {result="Obese"
                         statuscolour=Color.Red}
                         else -> "Enter valid weight & height"
@@ -99,11 +111,14 @@ fun tracker(){
                     contentColor = Color.White
                     ))
                 {Text("Calculate")}
-               Button(onClick = {weight=""
+               Button(onClick = {if (weight.isNotEmpty()&&height.isNotEmpty()){weight=""
                                 height=""
                                 bmi=null
                                 result=""
-                                statuscolour=Color.Black},modifier = Modifier.padding(7.dp),
+                                statuscolour=Color.Black
+                                scope.launch { message.showSnackbar("All fields have cleared") }}else
+                                {scope.launch { message.showSnackbar("Fields are already cleared") }}},
+                   modifier = Modifier.padding(7.dp),
                    colors = ButtonDefaults.buttonColors(
                        containerColor = colorResource(R.color.dark_green_40),
                        contentColor = Color.White)) {Text("Reset") }}
