@@ -50,7 +50,7 @@ fun tracker(){
    var weight by remember { mutableStateOf("") }
     var bmi by remember { mutableStateOf<Float?>(null) }
     var result by remember { mutableStateOf("") }
-    var status by remember { mutableStateOf("") }
+    var emoji by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
     var message=remember { SnackbarHostState()}
     var scope= rememberCoroutineScope()
@@ -96,13 +96,21 @@ fun tracker(){
                     }else {null}
                     when{
                         bmi!!<18.5 -> {result="Underweight"
-                        statuscolour=Color.Blue}
+                        statuscolour=Color.Blue
+                        emoji= "😅"
+                        }
                         bmi!!>18.5&&bmi!!<24.9 -> {result="Normal weight"
-                        statuscolour=Color.Green}
+                        statuscolour=Color.Green
+                        emoji="💪"
+                        }
                         bmi!!>25&&bmi!!<29.9-> {result="Overweight"
-                        statuscolour= Color.Magenta}
+                        statuscolour= Color.Magenta
+                        emoji="🍔"
+                        }
                         bmi!!>=30-> {result="Obese"
-                        statuscolour=Color.Red}
+                        statuscolour=Color.Red
+                        emoji="❤️‍🔥"
+                        }
                         else -> "Enter valid weight & height"
                     }}else{scope.launch { message.showSnackbar("Please fill the fields") }}
                 }, modifier = Modifier.padding(7.dp),
@@ -123,5 +131,5 @@ fun tracker(){
                        containerColor = colorResource(R.color.dark_green_40),
                        contentColor = Color.White)) {Text("Reset") }}
                 Column {  Text("BMI=${bmi?.let{String.format("%.2f",it)}?: ""}")
-                    Text("Result=$result",color=statuscolour)}
+                    Text("Result=$result $emoji",color=statuscolour)}
               } })}
