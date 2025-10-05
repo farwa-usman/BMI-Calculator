@@ -9,10 +9,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItemDefaults.contentColor
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -118,7 +122,8 @@ fun tracker(){
                     containerColor = colorResource(R.color.dark_green_40),
                     contentColor = Color.White
                     ))
-                {Text("Calculate")}
+                {Row {  Text("Calculate")
+                    Icon(Icons.Default.PlayArrow, contentDescription = "Calculate")}}
                Button(onClick = {if (weight.isNotEmpty()&&height.isNotEmpty()){weight=""
                                 height=""
                                 bmi=null
@@ -129,7 +134,8 @@ fun tracker(){
                    modifier = Modifier.padding(7.dp),
                    colors = ButtonDefaults.buttonColors(
                        containerColor = colorResource(R.color.dark_green_40),
-                       contentColor = Color.White)) {Text("Reset") }}
+                       contentColor = Color.White)) {Row {  Text("Reset")
+                   Icon(Icons.Default.Refresh, contentDescription = "refresh") } }}
                 Column {  Text("BMI=${bmi?.let{String.format("%.2f",it)}?: ""}")
                     Text("Result=$result $emoji",color=statuscolour)}
               } })}
