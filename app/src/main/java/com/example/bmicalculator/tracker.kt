@@ -4,19 +4,26 @@ import android.os.AsyncTask
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItemDefaults.contentColor
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -28,6 +35,7 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -47,6 +55,13 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
+data class BmiRecord(val id:Long,
+                  val weight:String,
+                  val height:String,
+                  val bmi:Float?,
+                  val result:String,
+                  val emoji:String
+    )
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview(showSystemUi = true)
@@ -56,12 +71,15 @@ fun tracker(){
     var result by remember { mutableStateOf("") }
     var emoji by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
+    var bmiHistory=remember { mutableStateListOf<BmiRecord>() }
     var message=remember { SnackbarHostState()}
     var scope= rememberCoroutineScope()
     var statuscolour by remember { mutableStateOf(Color.Black) }
     Scaffold(topBar = {TopAppBar(title ={Text("Weight tracker",
         color = Color.White, fontWeight = FontWeight.Bold,
-        fontSize = 30.sp)}, colors = TopAppBarDefaults.topAppBarColors(
+        fontSize = 30.sp)},actions={ IconButton(onClick = {}){Icon(imageVector = Icons.Default.Delete,
+        contentDescription = "History delete",
+        tint = Color.White)} }, colors = TopAppBarDefaults.topAppBarColors(
         colorResource(R.color.dark_green_40)
     ))},
         snackbarHost = { SnackbarHost(hostState = message) },
@@ -117,6 +135,9 @@ fun tracker(){
                         }
                         else -> "Enter valid weight & height"
                     }}else{scope.launch { message.showSnackbar("Please fill the fields") }}
+               //  Object creation
+               var record= BmiRecord(id= System.currentTimeMillis(),weight=weight,height=height,bmi=bmi,result=result,emoji=emoji)
+               bmiHistory.add(record)
                 }, modifier = Modifier.padding(7.dp),
                     colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(R.color.dark_green_40),
@@ -137,5 +158,16 @@ fun tracker(){
                        contentColor = Color.White)) {Row {  Text("Reset")
                    Icon(Icons.Default.Refresh, contentDescription = "refresh") } }}
                 Column {  Text("BMI=${bmi?.let{String.format("%.2f",it)}?: ""}")
-                    Text("Result=$result $emoji",color=statuscolour)}
+                    Text("Result=$result $emoji",color=statuscolour)
+                    Spacer(modifier = Modifier.height(16.dp))
+                  Divider()
+                    LazyColumn {
+                        items(bmiHistory,key={it.id}){Record->
+                            Column {
+                                Text("Weight=${Record.weight}Kg")
+                                Text("Height=${Record.height}m")
+                                Text("Bmi=${String.format("%.2f",Record.bmi)}")
+                                Text("Result=${Record.result}-${Record.emoji}")
+                            Divider(modifier = Modifier.padding(vertical = 16.dp))} } }
+                }
               } })}
