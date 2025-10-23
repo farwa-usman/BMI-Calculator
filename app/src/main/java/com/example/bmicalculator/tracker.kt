@@ -1,5 +1,7 @@
 package com.example.bmicalculator
 
+import android.icu.text.SimpleDateFormat
+import java.util.*
 import android.os.AsyncTask
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -57,19 +59,23 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import java.util.Date
+
 
 data class BmiRecord(val id:Long,
                   val weight:String,
                   val height:String,
                   val bmi:Float?,
                   val result:String,
-                  val emoji:String
+                  val emoji:String,
+                     val time:String
     )
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -155,13 +161,15 @@ fun tracker(){
                         }
                         else -> "Enter valid weight & height"
                     }}else{scope.launch { message.showSnackbar("Please fill the fields") }}
+               val time= SimpleDateFormat("hh:mm a").format(Date())
                //  Object creation
                var record= BmiRecord(id= System.currentTimeMillis(),
                    weight=weight,
                    height=height,
                    bmi=bmi,
                    result=result,
-                   emoji=emoji)
+                   emoji=emoji,
+                   time=time.toString())
                bmiHistory.add(record)
                 }, modifier = Modifier.padding(7.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -215,7 +223,10 @@ fun tracker(){
                                 Text("Height=${Record.height}m")
                                 Text("Bmi=${String.format("%.2f",Record.bmi)}")
                                 Text("Result=${Record.result}-${Record.emoji}",
-                                    color = statuscolour)} }
+                                    color = statuscolour)
+                      Text("Time=${Record.time}")} }
                             Divider(modifier = Modifier.padding(vertical = 16.dp)) } }
                 }
               } })}
+
+
