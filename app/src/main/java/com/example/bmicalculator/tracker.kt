@@ -88,7 +88,10 @@ fun tracker(){
     Scaffold(topBar = {TopAppBar(title ={Text("Weight tracker",
         color = Color.White, fontWeight = FontWeight.Bold,
         fontSize = 30.sp)},
-        actions={ IconButton(onClick = {})
+        actions={ IconButton(onClick = {if (bmiHistory.isNotEmpty())
+        {bmiHistory.clear()
+            scope.launch { message.showSnackbar("History have cleared") }
+        }else {scope.launch { message.showSnackbar("History is already clear") }}} )
         {Icon(imageVector = Icons.Default.Delete,
         contentDescription = "History delete",
         tint = Color.White)}},
