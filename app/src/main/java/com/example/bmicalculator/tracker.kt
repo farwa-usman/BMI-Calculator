@@ -161,7 +161,7 @@ fun tracker(){
                         }
                         else -> "Enter valid weight & height"
                     }}else{scope.launch { message.showSnackbar("Please fill the fields") }}
-               val time= SimpleDateFormat("hh:mm a").format(Date())
+               val time= SimpleDateFormat("dd MMM yy,hh:mm a").format(Date())
                //  Object creation
                var record= BmiRecord(id= System.currentTimeMillis(),
                    weight=weight,
