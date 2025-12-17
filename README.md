@@ -5,7 +5,7 @@ This app allows users to enter their weight and height, and instantly calculates
 
 ✨ Features
 
-✅ User-friendly UI with Material 3 (Scaffold + TopAppBar + Snackbar).
+✅ User-friendly UI with Material 3 (Scaffold + TopAppBar + Snackbar).<Br>
 ✅ Two input fields for entering Weight (kg) and Height (m).
 ✅ BMI Calculation with proper categorization:
 
