@@ -22,6 +22,7 @@ This app allows users to enter their weight and height, and instantly calculates
 ✅ Snackbar Messages for invalid input or field clearing.
 ✅ Reset Button to clear all fields instantly.
 ✅ Responsive UI that adjusts with system UI preview.
+✅ Give the history means record of calculation.
 
 🛠️ Tech Stack
 
