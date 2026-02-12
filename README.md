@@ -5,9 +5,9 @@ This app allows users to enter their weight and height, and instantly calculates
 
 ✨ Features
 
-✅ User-friendly UI with Material 3 (Scaffold + TopAppBar + Snackbar).
-✅ Two input fields for entering Weight (kg) and Height (m).
-✅ BMI Calculation with proper categorization:
+✅ User-friendly UI with Material 3 (Scaffold + TopAppBar + Snackbar).<Br>
+✅ Two input fields for entering Weight (kg) and Height (m).<Br>
+✅ BMI Calculation with proper categorization:<Br>
 
 🔵 Underweight (BMI < 18.5)
 
@@ -17,17 +17,18 @@ This app allows users to enter their weight and height, and instantly calculates
 
 🔴 Obese (≥ 30)
 
-✅ Dynamic Color Status (changes text color based on BMI result).
-✅ Emoji Feedback for fun and motivation (😅, 💪, 🍔, ❤️‍🔥).
-✅ Snackbar Messages for invalid input or field clearing.
-✅ Reset Button to clear all fields instantly.
-✅ Responsive UI that adjusts with system UI preview.
+✅ Dynamic Color Status (changes text color based on BMI result).<Br>
+✅ Emoji Feedback for fun and motivation (😅, 💪, 🍔, ❤️‍🔥).<Br>
+✅ Snackbar Messages for invalid input or field clearing.<Br>
+✅ Reset Button to clear all fields instantly.<Br>
+✅ Responsive UI that adjusts with system UI preview.<Br>
+✅ Give the history means record of calculation.<Br>
 
-🛠️ Tech Stack
+🛠️ Tech Stack<Br>
 
-Kotlin
+Kotlin<Br>
 
-Jetpack Compose (Material 3)
+Jetpack Compose (Material 3)<Br>
 
 Coroutines (for Snackbar)
 
