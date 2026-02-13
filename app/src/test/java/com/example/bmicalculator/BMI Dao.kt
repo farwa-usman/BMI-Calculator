@@ -1,5 +1,6 @@
 package com.example.bmicalculator
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -14,6 +15,6 @@ interface BmiDao{
     suspend fun delete(bmiRecord:BmiRecordEntity)
     @Update
     suspend fun update(bmiRecord:BmiRecordEntity)
-    @Query("SELECT*FROM `bmi-record`")
-    suspend fun getAllRecord():List<BmiRecordEntity>
+    @Query("SELECT*FROM `bmi-record` ORDER BY id DESC")
+     fun getAllRecord(): LiveData<List<BmiRecordEntity>>
 }

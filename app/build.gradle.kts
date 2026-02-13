@@ -65,6 +65,7 @@ dependencies {
 
 // Optional - Kotlin Extensions + Coroutines support
     implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.9.0")
 
 // Testing (optional)
     testImplementation("androidx.room:room-testing:2.6.1")
